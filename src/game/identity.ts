@@ -13,6 +13,12 @@ export const sanitize = (input: string): string =>
 
 export const isValidPin = (pin: string): boolean => /^[0-9]{4}$/.test(pin)
 
+/** Recopié à la main à l'inscription : une case se coche sans lire (specs/04). */
+export const OATH_SENTENCE = 'Je jure de respecter les fantômes'
+
+export const isOathFulfilled = (typed: string): boolean =>
+  sanitize(typed) === sanitize(OATH_SENTENCE)
+
 export const isValidName = (name: string): boolean => {
   const trimmed = name.trim()
   return trimmed.length > 0 && trimmed.length <= MAX_NAME_LENGTH && sanitize(trimmed).length > 0

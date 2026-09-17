@@ -1,5 +1,12 @@
 import { describe, expect, it } from 'vitest'
-import { isValidName, isValidPin, playerDocId, sanitize } from './identity'
+import {
+  OATH_SENTENCE,
+  isOathFulfilled,
+  isValidName,
+  isValidPin,
+  playerDocId,
+  sanitize,
+} from './identity'
 
 describe('sanitize', () => {
   it('retire accents, casse, espaces et ponctuation', () => {
@@ -36,6 +43,25 @@ describe('playerDocId', () => {
   it('refuse un code qui n’est pas quatre chiffres', () => {
     expect(() => playerDocId('Julie', '42')).toThrow()
     expect(() => playerDocId('Julie', 'abcd')).toThrow()
+  })
+})
+
+describe('serment', () => {
+  it('accepte la phrase recopiée telle quelle', () => {
+    expect(isOathFulfilled(OATH_SENTENCE)).toBe(true)
+  })
+
+  it('ne bloque ni sur les accents, ni sur la casse, ni sur la ponctuation', () => {
+    expect(isOathFulfilled('je jure de respecter les fantomes')).toBe(true)
+    expect(isOathFulfilled('JE JURE DE RESPECTER LES FANTÔMES !')).toBe(true)
+    expect(isOathFulfilled('  Je jure de respecter les fantômes.  ')).toBe(true)
+  })
+
+  it('refuse une phrase incomplète ou approximative', () => {
+    expect(isOathFulfilled('')).toBe(false)
+    expect(isOathFulfilled('Je jure')).toBe(false)
+    expect(isOathFulfilled('Je jure de respecter les fantome')).toBe(false)
+    expect(isOathFulfilled('ok')).toBe(false)
   })
 })
 

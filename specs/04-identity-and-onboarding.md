@@ -46,8 +46,10 @@ Un écran de l'application, pas des `prompt()` natifs. **Deux boutons explicites
 2. **Prénom** (obligatoire, espaces retirés, 20 caractères maximum pour que le classement reste lisible).
 3. **Code à 4 chiffres**, saisi **deux fois**. La double saisie n'est pas une formalité : une faute de frappe ici rend la récupération impossible plus tard. Clavier numérique (`inputMode="numeric"`), code conservé en chaîne de caractères — les zéros de tête comptent ("0042").
 4. Une phrase, au moment où le code est demandé : *il te servira si tu changes de téléphone ou si le jeu t'oublie*. Sans cette explication, "code" ne veut rien dire pour quelqu'un qui cherche des fantômes en papier.
-5. **La promesse** : case à cocher ou bouton dédié, dans le ton du jeu — les fantômes tolèrent les chasseurs respectueux, on ne les arrache pas, on ne les déplace pas. C'est le garde-fou qui protège les décorations, il doit être impossible de le rater.
+5. **Le serment** : le joueur **recopie une phrase à la main**, `Je jure de respecter les fantômes`. Pas de case à cocher — une case se coche sans lire, alors que taper une phrase oblige à la traverser mot à mot. C'est le garde-fou qui protège les décorations, il doit être impossible de le rater. La phrase à recopier est affichée juste au-dessus du champ : c'est une transcription, pas un exercice de mémoire.
 6. Validation désactivée tant que tout n'est pas rempli.
+
+La phrase recopiée est comparée avec la même normalisation que les énigmes (`sanitize()`, voir `07`) : accents, casse et ponctuation ne bloquent personne, seuls les mots comptent. Le but est de faire lire la promesse, pas de piéger sur un accent circonflexe.
 
 Si le document existe déjà (même prénom **et** même code — deux Julie ayant choisi 1234, ce qui arrivera), message explicite : *ce prénom avec ce code existe déjà, choisis un autre code — ou utilise « J'ai déjà joué » si c'est toi.* Ne jamais écraser un document existant.
 
@@ -55,7 +57,7 @@ Si le document existe déjà (même prénom **et** même code — deux Julie aya
 
 Prénom + code, puis récupération. Si le document n'existe pas : *aucune partie trouvée avec ce prénom et ce code*, avec un retour vers « Je commence ».
 
-La promesse n'est pas redemandée : elle a déjà été faite.
+Le serment n'est pas redemandé : il a déjà été prêté.
 
 ## Point critique : l'onboarding s'ouvre par un scan
 
@@ -71,7 +73,8 @@ Code **et** prénom oubliés, ou code saisi différemment de sa création : la p
 
 - Scanner un fantôme sans identité : onboarding, puis le fantôme est crédité sans rescan.
 - Le code s'affiche en permanence sur l'accueil et le classement.
-- Rafraîchir ne redemande jamais ni prénom, ni code, ni promesse.
+- Rafraîchir ne redemande jamais ni prénom, ni code, ni serment.
+- Le serment n'est validé que si la phrase est effectivement recopiée ; une case cochée à l'aveugle n'existe plus.
 - Même prénom, codes différents = deux joueuses distinctes au classement.
 - Même prénom, même code, via « Je commence » = message de collision, aucun écrasement.
 - Navigation privée puis « J'ai déjà joué » avec le bon couple = progression intégralement retrouvée.

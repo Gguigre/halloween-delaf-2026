@@ -2,7 +2,14 @@ import { useState } from 'react'
 import { FloatingGhost } from '../components/FloatingGhost'
 import { logGameEvent } from '../firebase/firebase'
 import { PlayerAlreadyExistsError, createPlayer, fetchPlayer } from '../firebase/players'
-import { MAX_NAME_LENGTH, isValidName, isValidPin, playerDocId } from '../game/identity'
+import {
+  MAX_NAME_LENGTH,
+  OATH_SENTENCE,
+  isOathFulfilled,
+  isValidName,
+  isValidPin,
+  playerDocId,
+} from '../game/identity'
 import { usePlayerContext } from './context'
 
 type Mode = 'choice' | 'new' | 'returning'
@@ -44,12 +51,13 @@ function NewPlayerForm({ onBack }: { onBack: () => void }) {
   const [name, setName] = useState('')
   const [pin, setPin] = useState('')
   const [pinConfirm, setPinConfirm] = useState('')
-  const [promised, setPromised] = useState(false)
+  const [oath, setOath] = useState('')
   const [pending, setPending] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   const pinsMatch = pin === pinConfirm
-  const canSubmit = isValidName(name) && isValidPin(pin) && pinsMatch && promised && !pending
+  const oathFulfilled = isOathFulfilled(oath)
+  const canSubmit = isValidName(name) && isValidPin(pin) && pinsMatch && oathFulfilled && !pending
 
   const submit = async (event: React.FormEvent) => {
     event.preventDefault()
@@ -128,18 +136,29 @@ function NewPlayerForm({ onBack }: { onBack: () => void }) {
         )}
       </div>
 
-      <label className="promise">
-        <input
-          type="checkbox"
-          checked={promised}
-          onChange={(event) => setPromised(event.target.checked)}
-        />
-        <span>
-          <strong>Promis, je chasse poliment.</strong> Les fantômes ne tolèrent que les
-          chasseurs respectueux : on ne les décroche pas, on ne les déplace pas, on ne les
-          cache pas pour embêter les autres.
-        </span>
-      </label>
+      <div className="oath">
+        <p className="oath-intro">
+          Les fantômes ne tolèrent que les chasseurs respectueux : on ne les décroche pas, on
+          ne les déplace pas, on ne les cache pas pour embêter les autres.
+        </p>
+        <p className="oath-sentence">{OATH_SENTENCE}</p>
+        <div className="field">
+          <label htmlFor="oath">Recopie cette phrase pour prêter serment</label>
+          <input
+            id="oath"
+            type="text"
+            value={oath}
+            autoComplete="off"
+            autoCapitalize="sentences"
+            spellCheck={false}
+            onChange={(event) => setOath(event.target.value)}
+          />
+          {oath.trim().length > 0 && !oathFulfilled && (
+            <p className="field-hint">Pas tout à fait — recopie la phrase en entier.</p>
+          )}
+          {oathFulfilled && <p className="oath-done">Serment prêté. 🕯️</p>}
+        </div>
+      </div>
 
       {error && <p className="field-error">{error}</p>}
 

@@ -171,24 +171,36 @@ a.btn {
   margin: 8px 0 0;
 }
 
-.promise {
-  display: flex;
-  gap: 10px;
-  align-items: flex-start;
+.oath {
   background: var(--bg-card-hi);
   border: 1px solid var(--violet);
   border-radius: var(--radius);
   padding: 14px;
   margin-bottom: 16px;
-  cursor: pointer;
 }
 
-.promise input {
-  width: 24px;
-  height: 24px;
-  margin: 2px 0 0;
-  flex-shrink: 0;
-  accent-color: var(--violet);
+.oath-intro {
+  margin-top: 0;
+  font-size: 15px;
+  color: var(--text-dim);
+}
+
+.oath-sentence {
+  font-size: 19px;
+  font-weight: 700;
+  text-align: center;
+  margin: 14px 0;
+  color: var(--orange);
+}
+
+.oath .field {
+  margin-bottom: 0;
+}
+
+.oath-done {
+  margin: 6px 0 0;
+  font-size: 15px;
+  color: var(--green);
 }
 
 .pending {
