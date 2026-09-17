@@ -69,6 +69,11 @@ button {
   border-color: var(--red);
 }
 
+.card-warning {
+  border-color: var(--orange);
+  background: var(--bg-card-hi);
+}
+
 .card h2 {
   margin-top: 0;
 }

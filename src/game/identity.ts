@@ -3,9 +3,14 @@ export const MAX_NAME_LENGTH = 20
 /**
  * Minuscules, sans accents, sans ponctuation ni espaces. Sert à la fois à dériver
  * la clé du document joueur (specs/04) et à comparer les réponses aux énigmes (specs/07).
+ *
+ * Les ligatures sont développées à la main : NFD ne les décompose pas, « œuf »
+ * donnerait « uf » et coûterait 10 points à qui écrit bien.
  */
 export const sanitize = (input: string): string =>
   input
+    .replace(/œ/gi, 'oe')
+    .replace(/æ/gi, 'ae')
     .normalize('NFD')
     .replace(/[̀-ͯ]/g, '')
     .toLowerCase()

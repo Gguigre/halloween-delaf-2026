@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import { ErrorState } from '../components/ErrorState'
 import { FloatingGhost } from '../components/FloatingGhost'
 import { ResultBanner } from '../components/ResultBanner'
+import { UnknownGhost } from '../components/UnknownGhost'
 import { logGameEvent } from '../firebase/firebase'
 import { addBasicGhost } from '../firebase/players'
 import { isBasicGhost } from '../game/content'
@@ -49,19 +50,7 @@ export function BasicGhostPage() {
     }
   }, [docId, id, known, alreadyFound, attempt, reload])
 
-  if (!known) {
-    return (
-      <div className="center">
-        <FloatingGhost size={110} />
-        <h1>Ce n'est pas un fantôme !</h1>
-        <p>
-          Ce QR code ne correspond à aucun fantôme du jeu. Montre-le à l'organisateur, il
-          saura quoi en faire.
-        </p>
-        <p className="muted">Rassure-toi : ça ne t'a coûté aucun point.</p>
-      </div>
-    )
-  }
+  if (!known) return <UnknownGhost />
 
   if (alreadyFound) {
     return (
