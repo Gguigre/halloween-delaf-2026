@@ -6,6 +6,20 @@ Chaque joueur choisit un prénom et un **code à 4 chiffres**. Le couple des deu
 
 Pas de mot de passe, pas de compte, pas d'authentification Firebase, pas de PWA.
 
+## Quand le code est demandé, et quand il ne l'est pas
+
+`localStorage` reste le mécanisme nominal : il conserve la clé du document (`julie-4271`), et tant qu'elle est présente, **le joueur ne saisit jamais rien**. Il scanne, l'écran du fantôme s'affiche, c'est tout.
+
+| Situation | Ce que voit le joueur |
+|---|---|
+| Tout premier scan | Onboarding, il choisit prénom et code |
+| Scans suivants dans le même navigateur | Rien — le fantôme s'affiche directement |
+| `localStorage` vide (navigateur intégré, navigation privée, cache effacé, purge iOS après 7 jours) | Onboarding, il retape prénom et code via « J'ai déjà joué » |
+
+Dans le cas nominal, le code est donc saisi **une seule fois dans tout le jeu**, à la création. C'est précisément pour ça qu'il doit rester visible dans l'application (accueil et classement) : un code saisi une fois fin octobre et redemandé trois semaines plus tard ne se retient pas tout seul.
+
+Ne jamais redemander le code « par sécurité » : il ne sécurise rien, et une saisie superflue à chaque scan tuerait le rythme du jeu.
+
 ## Le code n'est pas un secret
 
 C'est une clé de récupération, pas une protection : un jeu entre collègues ne protège rien qui mérite d'être protégé. Trois conséquences, toutes volontaires :

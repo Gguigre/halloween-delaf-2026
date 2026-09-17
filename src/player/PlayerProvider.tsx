@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import { fetchPlayer } from '../firebase/players'
 import { playerDocId } from '../game/identity'
@@ -24,6 +24,14 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
   const [status, setStatus] = useState<Status>(knownDocId ? 'loading' : 'anonymous')
   const [session, setSession] = useState<PlayerSession | null>(null)
   const [attempt, setAttempt] = useState(0)
+
+  // `reload` doit garder la même identité d'un rendu à l'autre : les écrans de scan
+  // le mettent dans les dépendances de l'effet qui écrit, une identité changeante
+  // les ferait réécrire en boucle.
+  const sessionRef = useRef<PlayerSession | null>(null)
+  useEffect(() => {
+    sessionRef.current = session
+  }, [session])
 
   useEffect(() => {
     if (!knownDocId) return undefined
@@ -58,10 +66,11 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
   }, [])
 
   const reload = useCallback(async () => {
-    if (!session) return
-    const player = await fetchPlayer(session.docId)
-    if (player) setSession({ docId: session.docId, player })
-  }, [session])
+    const current = sessionRef.current
+    if (!current) return
+    const player = await fetchPlayer(current.docId)
+    if (player) setSession({ docId: current.docId, player })
+  }, [])
 
   const retry = useCallback(() => {
     setStatus('loading')

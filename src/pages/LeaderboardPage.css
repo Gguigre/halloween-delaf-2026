@@ -1,0 +1,63 @@
+.my-rank {
+  border-color: var(--orange);
+}
+
+.my-rank-line {
+  margin-top: 0;
+  font-size: 18px;
+}
+
+.progress {
+  height: 10px;
+  border-radius: 999px;
+  background: var(--bg);
+  overflow: hidden;
+  margin: 12px 0;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--violet), var(--orange));
+}
+
+.board {
+  list-style: none;
+  margin: 0 0 20px;
+  padding: 0;
+}
+
+.board-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.board-row-me {
+  background: var(--bg-card-hi);
+  border-radius: var(--radius);
+  font-weight: 700;
+}
+
+.board-rank {
+  min-width: 28px;
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+.board-name {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.board-score {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
+.score-negative {
+  color: var(--red);
+}
