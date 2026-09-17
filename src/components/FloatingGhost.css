@@ -1,0 +1,23 @@
+@keyframes ghost-float {
+  0%,
+  100% {
+    transform: translateY(-6px);
+  }
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+.floating-ghost {
+  display: block;
+  margin: 0 auto;
+  animation: ghost-float 3s ease-in-out infinite;
+  will-change: transform;
+  filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.45));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .floating-ghost {
+    animation: none;
+  }
+}

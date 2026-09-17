@@ -1,0 +1,44 @@
+rules_version = '2';
+
+// Règles explicites, SANS date d'expiration : le jeu dure un mois, des règles
+// en mode test tomberaient en pleine partie (specs/01).
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Un document par joueur : "prenom-1234" (specs/03, specs/04).
+    match /Users/{userId} {
+      // Le classement lit toute la collection.
+      allow read: if true;
+
+      // Création sans authentification, avec un document bien formé.
+      allow create: if isValidPlayer(request.resource.data)
+                    && request.resource.data.ghosts.size() == 0
+                    && request.resource.data.quizzes.size() == 0
+                    && request.resource.data.jokers.size() == 0;
+
+      // Mise à jour : ni le prénom, ni le code, ni la date de création ne bougent.
+      allow update: if isValidPlayer(request.resource.data)
+                    && request.resource.data.name == resource.data.name
+                    && request.resource.data.pin == resource.data.pin
+                    && request.resource.data.createdAt == resource.data.createdAt;
+
+      // Aucune suppression, jamais.
+      allow delete: if false;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
+
+function isValidPlayer(data) {
+  return data.keys().hasOnly(['name', 'pin', 'ghosts', 'quizzes', 'jokers', 'createdAt'])
+         && data.keys().hasAll(['name', 'pin', 'ghosts', 'quizzes', 'jokers', 'createdAt'])
+         && data.name is string && data.name.size() > 0 && data.name.size() <= 20
+         && data.pin is string && data.pin.matches('^[0-9]{4}$')
+         && data.ghosts is list && data.ghosts.size() <= 200
+         && data.quizzes is list && data.quizzes.size() <= 50
+         && data.jokers is list && data.jokers.size() <= 30
+         && data.createdAt is number;
+}
