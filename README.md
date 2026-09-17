@@ -29,7 +29,14 @@ yarn test    # Vitest
 Un push sur `main` déclenche le workflow [`deploy.yml`](.github/workflows/deploy.yml) :
 install → lint → test → build → publication de `dist/` sur GitHub Pages.
 
-Une seule chose à régler côté GitHub : **Settings → Pages → Source : GitHub Actions**.
+Deux réglages à faire une fois pour toutes côté GitHub, sinon l'étape
+`configure-pages` échoue :
+
+1. **Settings → Pages → Build and deployment → Source : GitHub Actions**
+2. **Settings → Actions → General → Workflow permissions : Read and write**
+
+Puis relancer le workflow (**Actions → Déploiement GitHub Pages → Re-run jobs**).
+Le site sort sur https://gguigre.github.io/halloween-delaf-2026/
 
 ⚠️ La `base` de [`vite.config.ts`](vite.config.ts) (`/halloween-delaf-2026/`) doit
 correspondre au nom du dépôt. Une `base` erronée casse le chargement des assets **et**
