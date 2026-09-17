@@ -1,0 +1,20 @@
+[
+  {
+    "id": "NYS89J",
+    "question": "Je n'ai ni porte ni fenêtre, mais quand on me casse, tout le monde veut me manger. Qui suis-je ?",
+    "answer": "un oeuf",
+    "acceptedAnswers": ["oeuf", "un œuf", "œuf", "des oeufs"]
+  },
+  {
+    "id": "FMZNMR",
+    "question": "Plus j'en enlève, plus je deviens grand. Qui suis-je ?",
+    "answer": "un trou",
+    "acceptedAnswers": ["trou", "des trous", "les trous"]
+  },
+  {
+    "id": "MYMVGR",
+    "question": "Quel légume creusé et illuminé est le symbole d'Halloween ?",
+    "answer": "la citrouille",
+    "acceptedAnswers": ["citrouille", "une citrouille", "citrouilles", "potiron"]
+  }
+]

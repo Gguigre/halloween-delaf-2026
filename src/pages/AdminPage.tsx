@@ -1,10 +1,8 @@
-import { Layout } from '../components/Layout'
-
 export function AdminPage() {
   return (
-    <Layout>
+    <div>
       <h1>Organisateur</h1>
       <p>Bouhouhou ! Cet écran arrive bientôt.</p>
-    </Layout>
+    </div>
   )
 }

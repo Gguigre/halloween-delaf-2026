@@ -1,0 +1,29 @@
+[
+  {
+    "id": "5ER5ZP",
+    "game": "snake",
+    "timeLimitSeconds": 90,
+    "config": { "gridSize": 15, "targetApples": 10, "tickMs": 160 }
+  },
+  {
+    "id": "TBPGWP",
+    "game": "tetris",
+    "timeLimitSeconds": 150,
+    "config": { "cols": 8, "rows": 14, "targetLines": 3, "dropMs": 700 }
+  },
+  {
+    "id": "PZHATW",
+    "game": "sudoku",
+    "timeLimitSeconds": 180,
+    "config": { "cellsToRemove": 12 }
+  },
+  {
+    "id": "QT6TCX",
+    "game": "wordle",
+    "timeLimitSeconds": 180,
+    "config": {
+      "words": ["MOMIE", "MAGIE", "TOMBE", "OMBRE", "CRANE", "HIBOU", "BALAI", "TOILE"],
+      "maxAttempts": 6
+    }
+  }
+]

@@ -1,10 +1,8 @@
-import { Layout } from '../components/Layout'
-
 export function BasicGhostPage() {
   return (
-    <Layout>
+    <div>
       <h1>Fantôme basique</h1>
       <p>Bouhouhou ! Cet écran arrive bientôt.</p>
-    </Layout>
+    </div>
   )
 }

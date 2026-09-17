@@ -5,12 +5,23 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
+    function isValidPlayer(data) {
+      return data.keys().hasAll(['name', 'pin', 'ghosts', 'quizzes', 'jokers', 'createdAt'])
+             && data.keys().hasOnly(['name', 'pin', 'ghosts', 'quizzes', 'jokers', 'createdAt'])
+             && data.name is string && data.name.size() > 0 && data.name.size() <= 20
+             && data.pin is string && data.pin.matches('^[0-9]{4}$')
+             && data.ghosts is list && data.ghosts.size() <= 200
+             && data.quizzes is list && data.quizzes.size() <= 50
+             && data.jokers is list && data.jokers.size() <= 30
+             && data.createdAt is number;
+    }
+
     // Un document par joueur : "prenom-1234" (specs/03, specs/04).
     match /Users/{userId} {
       // Le classement lit toute la collection.
       allow read: if true;
 
-      // Création sans authentification, avec un document bien formé.
+      // Création sans authentification, avec un document bien formé et vierge.
       allow create: if isValidPlayer(request.resource.data)
                     && request.resource.data.ghosts.size() == 0
                     && request.resource.data.quizzes.size() == 0
@@ -30,15 +41,4 @@ service cloud.firestore {
       allow read, write: if false;
     }
   }
-}
-
-function isValidPlayer(data) {
-  return data.keys().hasOnly(['name', 'pin', 'ghosts', 'quizzes', 'jokers', 'createdAt'])
-         && data.keys().hasAll(['name', 'pin', 'ghosts', 'quizzes', 'jokers', 'createdAt'])
-         && data.name is string && data.name.size() > 0 && data.name.size() <= 20
-         && data.pin is string && data.pin.matches('^[0-9]{4}$')
-         && data.ghosts is list && data.ghosts.size() <= 200
-         && data.quizzes is list && data.quizzes.size() <= 50
-         && data.jokers is list && data.jokers.size() <= 30
-         && data.createdAt is number;
 }
