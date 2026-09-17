@@ -33,7 +33,7 @@ export function QuizGhostPage() {
   const record = async (correct: boolean) => {
     setStatus('pending')
     try {
-      await addQuizResult(docId, { id, correct, at: Date.now() })
+      await addQuizResult(docId, id, correct)
       logGameEvent('quiz_answered', { ghost: id, correct })
       try {
         await reload()

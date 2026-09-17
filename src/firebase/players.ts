@@ -76,11 +76,16 @@ export const subscribeToPlayers = (
 export const addBasicGhost = (docId: string, ghostId: string): Promise<void> =>
   withTimeout(updateDoc(playerRef(docId), { ghosts: arrayUnion(ghostId) }))
 
-export const addQuizResult = (docId: string, result: QuizResult): Promise<void> =>
-  withTimeout(updateDoc(playerRef(docId), { quizzes: arrayUnion(result) }))
+export const addQuizResult = (docId: string, quizId: string, correct: boolean): Promise<void> => {
+  const result: QuizResult = { id: quizId, correct, at: Date.now() }
+  return withTimeout(updateDoc(playerRef(docId), { quizzes: arrayUnion(result) }))
+}
 
-export const startJokerAttempt = (docId: string, result: JokerResult): Promise<void> =>
-  withTimeout(updateDoc(playerRef(docId), { jokers: arrayUnion(result) }))
+/** Toute tentative commence perdue : l'abandon se solde ainsi sans traitement (specs/08). */
+export const startJokerAttempt = (docId: string, jokerId: string): Promise<void> => {
+  const result: JokerResult = { id: jokerId, won: false, at: Date.now() }
+  return withTimeout(updateDoc(playerRef(docId), { jokers: arrayUnion(result) }))
+}
 
 /**
  * Seule écriture du jeu qui modifie une entrée existante (specs/08) : la transaction

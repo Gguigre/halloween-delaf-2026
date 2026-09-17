@@ -208,6 +208,14 @@ a.btn {
   color: var(--green);
 }
 
+.gain {
+  color: var(--green);
+}
+
+.loss {
+  color: var(--red);
+}
+
 .pending {
   color: var(--text-dim);
   font-size: 15px;
