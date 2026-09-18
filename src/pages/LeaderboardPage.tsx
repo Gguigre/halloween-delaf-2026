@@ -1,53 +1,15 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { ErrorState } from '../components/ErrorState'
 import { FloatingGhost } from '../components/FloatingGhost'
-import { subscribeToPlayers } from '../firebase/players'
+import { usePlayers } from '../firebase/usePlayers'
 import { buildLeaderboard, progressPercent } from '../game/leaderboard'
-import type { LeaderboardEntry } from '../game/leaderboard'
 import { usePlayerContext } from '../player/context'
 import './LeaderboardPage.css'
 
 export function LeaderboardPage() {
   const { session } = usePlayerContext()
-  const [entries, setEntries] = useState<LeaderboardEntry[] | null>(null)
-  const [failed, setFailed] = useState(false)
-  const [attempt, setAttempt] = useState(0)
-
-  useEffect(() => {
-    let unsubscribe: (() => void) | null = null
-
-    const start = () => {
-      if (unsubscribe) return
-      unsubscribe = subscribeToPlayers(
-        (next) => {
-          setEntries(next)
-          setFailed(false)
-        },
-        () => setFailed(true),
-      )
-    }
-
-    // Le jeu dure un mois : un onglet oublié en arrière-plan consommerait
-    // du quota Firestore pour personne (specs/13).
-    const stop = () => {
-      unsubscribe?.()
-      unsubscribe = null
-    }
-
-    const onVisibilityChange = () => {
-      if (document.hidden) stop()
-      else start()
-    }
-
-    if (!document.hidden) start()
-    document.addEventListener('visibilitychange', onVisibilityChange)
-
-    return () => {
-      document.removeEventListener('visibilitychange', onVisibilityChange)
-      stop()
-    }
-  }, [attempt])
+  const { entries, failed, retry } = usePlayers()
 
   const rows = useMemo(() => buildLeaderboard(entries ?? []), [entries])
   const me = rows.find((row) => row.docId === session?.docId)
@@ -57,10 +19,7 @@ export function LeaderboardPage() {
       <ErrorState
         title="Classement indisponible"
         message="On n'arrive pas à charger le classement. Vérifie ta connexion, puis réessaie."
-        onRetry={() => {
-          setFailed(false)
-          setAttempt((previous) => previous + 1)
-        }}
+        onRetry={retry}
       />
     )
   }

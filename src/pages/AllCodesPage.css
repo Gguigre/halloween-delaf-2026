@@ -1,0 +1,89 @@
+.all-codes-filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.all-codes-filters .btn {
+  width: auto;
+  flex: 1;
+  min-width: 80px;
+  margin-bottom: 0;
+}
+
+.all-codes-section h2 {
+  margin-top: 24px;
+}
+
+.all-codes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 14px;
+}
+
+.qr {
+  margin: 0;
+  padding: 10px 6px;
+  background: #fff;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.qr svg {
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  height: auto;
+  max-width: 128px;
+}
+
+/* Sans cette étiquette, un fantôme défaillant est indiagnosticable (specs/15). */
+.qr figcaption {
+  margin-top: 6px;
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #000;
+}
+
+/* Fond blanc, QR noirs : le thème sombre viderait une cartouche pour rien. */
+@media print {
+  .all-codes-toolbar,
+  .layout-footer {
+    display: none;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+  }
+
+  .layout {
+    max-width: none;
+    padding: 0;
+  }
+
+  .all-codes-section h2 {
+    break-after: avoid;
+    page-break-after: avoid;
+    color: #000;
+  }
+
+  .all-codes-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10mm 6mm;
+  }
+
+  /* Jamais un QR code coupé en deux entre deux feuilles. */
+  .qr {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    border: 1px dashed #bbb;
+  }
+
+  @page {
+    margin: 12mm;
+  }
+}

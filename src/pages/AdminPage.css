@@ -1,0 +1,42 @@
+.admin-row {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  background: var(--bg-card);
+}
+
+.admin-identity {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.admin-name {
+  font-size: 19px;
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* C'est l'information qu'on vient chercher : lisible d'un coup d'œil (specs/18). */
+.admin-pin {
+  font-size: 34px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--orange);
+  font-variant-numeric: tabular-nums;
+}
+
+.admin-details {
+  margin: 6px 0 2px;
+  font-size: 15px;
+}
+
+.admin-meta {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-dim);
+}
