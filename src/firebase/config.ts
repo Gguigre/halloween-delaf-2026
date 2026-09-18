@@ -1,6 +1,11 @@
 /**
  * Clés publiques d'une app web Firebase : committées en clair, comme dans n'importe
- * quelle app Firebase. La sécurité repose sur `firestore.rules`, pas sur ces valeurs.
+ * quelle app Firebase. Elles identifient le projet, elles n'autorisent rien — elles
+ * sont de toute façon lisibles dans le bundle servi à chaque joueur.
+ *
+ * La sécurité repose sur `firestore.rules`. L'alerte « secret détecté » de GitHub
+ * sur ce fichier est un faux positif : voir la section dédiée du README, qui décrit
+ * le durcissement utile (restriction de la clé par référent HTTP).
  */
 export const firebaseConfig = {
   apiKey: 'AIzaSyDgXseWNKmQh_7hiNvDZwlRgPjxnEzRom0',

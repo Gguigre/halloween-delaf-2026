@@ -116,6 +116,39 @@ Déploiement, au choix :
 Vérifier avant le lancement qu'aucune règle `request.time < timestamp.date(...)` ne
 traîne dans la console (voir [`specs/17`](specs/17-operations-runbook.md)).
 
+## L'alerte « secret détecté » de GitHub
+
+GitHub signale la clé Firebase de [`src/firebase/config.ts`](src/firebase/config.ts)
+comme une Google API Key exposée. **C'est un faux positif attendu, l'alerte peut être
+fermée** — mais il faut comprendre pourquoi avant de la fermer.
+
+Une clé d'application web Firebase **identifie** le projet, elle n'**autorise** rien.
+Elle est embarquée dans le bundle JavaScript servi à chaque joueur : n'importe qui
+peut la lire depuis les outils de développement de son navigateur, qu'elle soit
+committée ou non. La régénérer ne servirait donc à rien — la nouvelle serait tout
+aussi publique.
+
+Ce qui protège réellement les données, c'est [`firestore.rules`](firestore.rules) :
+lecture de la collection, création et mise à jour validées, **aucune suppression**.
+Et le fait qu'un joueur motivé puisse écrire dans son propre document est un risque
+déjà pesé et accepté dans [`specs/00`](specs/00-overview.md) — c'est un jeu entre
+collègues, pas un système bancaire.
+
+### Le durcissement qui vaut, lui, le coup
+
+Le vrai risque d'une clé non restreinte n'est pas la fuite de données, c'est qu'on
+s'en serve pour consommer ton quota. Dans la console Google Cloud → **API et
+services → Identifiants → la clé « Browser key (auto created by Firebase) »** :
+
+- **Restrictions d'application** : sites web autorisés →
+  `https://gguigre.github.io/*` et `http://localhost:*/*` pour le développement.
+- **Restrictions d'API** : limiter aux API réellement utilisées — Cloud Firestore,
+  et Firebase Installations plus Google Analytics si tu gardes les statistiques.
+
+⚠️ À faire **avant le lancement**, pas pendant : une restriction mal réglée casse le
+jeu pour tout le monde. Après l'avoir appliquée, vérifie depuis un téléphone sur le
+réseau mobile qu'un scan fonctionne toujours. En cas de doute, retire la restriction.
+
 ## Éditer le contenu
 
 Trois fichiers JSON dans [`src/assets/`](src/assets/), embarqués dans le build :
@@ -177,6 +210,8 @@ qu'on ne peut pas rattraper une fois la partie commencée :
   en mode test expirent à 30 jours : sur un jeu d'un mois, elles tomberaient en
   pleine partie.
 - **Imprimer une page d'essai et la scanner**, depuis le site déployé.
+- **Restreindre la clé API Firebase** par référent HTTP, puis vérifier depuis un
+  téléphone qu'un scan fonctionne toujours.
 - **Vider la collection `Users`** des joueurs de test depuis la console Firebase,
   sinon un score de développement trône en tête pendant un mois.
 - **Noter les emplacements des fantômes** : sur un mois, cette liste sert à vérifier
