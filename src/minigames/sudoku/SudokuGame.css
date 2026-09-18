@@ -1,0 +1,95 @@
+.sudoku {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.sudoku-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.sudoku-goal {
+  font-size: 15px;
+  color: var(--text-dim);
+}
+
+.sudoku-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  width: 100%;
+  aspect-ratio: 1;
+  background: var(--border);
+  border: 2px solid var(--text-dim);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.sudoku-cell {
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--orange);
+  font-size: 22px;
+  font-weight: 700;
+  padding: 0;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Les cases d'origine ne sont pas modifiables et restent visuellement distinctes. */
+.sudoku-given {
+  background: var(--bg-card-hi);
+  color: var(--text);
+  cursor: default;
+}
+
+.sudoku-selected {
+  outline: 3px solid var(--violet);
+  outline-offset: -3px;
+}
+
+.sudoku-conflict {
+  color: var(--red);
+  background: rgba(255, 92, 114, 0.12);
+}
+
+.sudoku-block-top {
+  border-top-color: var(--text-dim);
+}
+
+.sudoku-block-left {
+  border-left-color: var(--text-dim);
+}
+
+.sudoku-pad {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.sudoku-btn {
+  min-height: 52px;
+  font-size: 21px;
+  font-weight: 700;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-card-hi);
+  color: var(--text);
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.sudoku-btn:active {
+  background: var(--violet);
+}
+
+.sudoku-btn:disabled {
+  opacity: 0.4;
+}
+
+.sudoku-erase {
+  border-color: var(--orange);
+  color: var(--orange);
+}

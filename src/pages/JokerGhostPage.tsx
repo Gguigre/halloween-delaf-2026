@@ -9,7 +9,8 @@ import { markJokerWon, startJokerAttempt } from '../firebase/players'
 import { findJokerGhost } from '../game/content'
 import { POINTS_JOKER_LOSE, POINTS_JOKER_WIN } from '../game/scoring'
 import { Minigame } from '../minigames/Minigame'
-import { AVAILABLE_GAMES, GAME_LABELS, goalOf } from '../minigames/catalogue'
+import { GAME_LABELS, goalOf } from '../minigames/catalogue'
+import { pickWord } from '../minigames/wordle/logic'
 import type { MinigameResult } from '../minigames/types'
 import { usePlayerContext, usePlayerSession } from '../player/context'
 
@@ -28,9 +29,11 @@ export function JokerGhostPage() {
   const [won, setWon] = useState(false)
 
   if (!ghost) return <UnknownGhost />
-  if (previous) return <JokerResult won={previous.won} replay />
+  // Le mot du Wordle est révélé en cas de défaite, ici et pas dans le composant (specs/12).
+  const secretWord =
+    ghost.game === 'wordle' ? pickWord(ghost.config.words, docId, ghost.id) : undefined
 
-  const playable = AVAILABLE_GAMES.includes(ghost.game)
+  if (previous) return <JokerResult won={previous.won} word={secretWord} replay />
 
   // Le lancement engage : sans cette écriture, un joueur qui voit qu'il va perdre
   // fermerait l'onglet sans jamais payer les 30 points (specs/08).
@@ -71,7 +74,8 @@ export function JokerGhostPage() {
     void save()
   }
 
-  if (phase === 'playing') return <Minigame ghost={ghost} onFinish={onFinish} />
+  if (phase === 'playing')
+    return <Minigame ghost={ghost} docId={docId} onFinish={onFinish} />
 
   if (phase === 'starting' || phase === 'saving') {
     return (
@@ -105,7 +109,7 @@ export function JokerGhostPage() {
     )
   }
 
-  if (phase === 'done') return <JokerResult won={won} />
+  if (phase === 'done') return <JokerResult won={won} word={secretWord} />
 
   return (
     <div>
@@ -135,18 +139,22 @@ export function JokerGhostPage() {
         </p>
       </div>
 
-      {playable ? (
-        <button type="button" className="btn btn-primary" onClick={() => void start()}>
-          Je lance la partie
-        </button>
-      ) : (
-        <p className="center muted">Ce mini-jeu n'est pas encore prêt. Reviens bientôt !</p>
-      )}
+      <button type="button" className="btn btn-primary" onClick={() => void start()}>
+        Je lance la partie
+      </button>
     </div>
   )
 }
 
-function JokerResult({ won, replay = false }: { won: boolean; replay?: boolean }) {
+function JokerResult({
+  won,
+  word,
+  replay = false,
+}: {
+  won: boolean
+  word?: string
+  replay?: boolean
+}) {
   return (
     <div>
       {replay && <p className="center muted">Tu as déjà tenté ce fantôme joker.</p>}
@@ -155,7 +163,16 @@ function JokerResult({ won, replay = false }: { won: boolean; replay?: boolean }
         delta={won ? POINTS_JOKER_WIN : POINTS_JOKER_LOSE}
         title={won ? 'Bravo !' : 'Dommage…'}
       >
-        <p>{won ? 'Joli coup, ce joker t’a rapporté gros.' : 'Ce joker t’a coûté cher. Il en reste d’autres à tenter !'}</p>
+        <p>
+          {won
+            ? 'Joli coup, ce joker t’a rapporté gros.'
+            : 'Ce joker t’a coûté cher. Il en reste d’autres à tenter !'}
+        </p>
+        {!won && word && (
+          <p>
+            Le mot était : <strong>{word.toUpperCase()}</strong>
+          </p>
+        )}
       </ResultBanner>
     </div>
   )

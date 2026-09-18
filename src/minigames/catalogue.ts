@@ -1,8 +1,5 @@
 import type { JokerGame, JokerGhost } from '../game/types'
 
-/** Les trois autres mini-jeux arrivent au jalon suivant. */
-export const AVAILABLE_GAMES: JokerGame[] = ['snake']
-
 export const GAME_LABELS: Record<JokerGame, string> = {
   snake: 'Snake',
   tetris: 'Tetris',

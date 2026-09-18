@@ -1,0 +1,84 @@
+.tetris {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tetris-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.tetris-goal {
+  font-weight: 700;
+  font-size: 17px;
+  font-variant-numeric: tabular-nums;
+}
+
+.tetris-board {
+  display: grid;
+  width: 100%;
+  max-height: 52vh;
+  margin: 0 auto;
+  gap: 1px;
+  padding: 4px;
+  background: var(--border);
+  border-radius: 10px;
+  touch-action: none;
+}
+
+.tetris-cell {
+  background: var(--bg);
+  border-radius: 2px;
+}
+
+.tetris-p1 {
+  background: #22d3ee;
+}
+.tetris-p2 {
+  background: #facc15;
+}
+.tetris-p3 {
+  background: var(--violet);
+}
+.tetris-p4 {
+  background: var(--green);
+}
+.tetris-p5 {
+  background: var(--red);
+}
+.tetris-p6 {
+  background: #60a5fa;
+}
+.tetris-p7 {
+  background: var(--orange);
+}
+
+.tetris-pad {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+
+.tetris-btn {
+  min-height: 56px;
+  font-size: 22px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-card-hi);
+  color: var(--text);
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.tetris-btn:active {
+  background: var(--violet);
+}
+
+.tetris-hard {
+  border-color: var(--orange);
+  color: var(--orange);
+}
