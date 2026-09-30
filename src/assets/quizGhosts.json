@@ -1,20 +1,132 @@
 [
   {
     "id": "NYS89J",
-    "question": "Je n'ai ni porte ni fenêtre, mais quand on me casse, tout le monde veut me manger. Qui suis-je ?",
-    "answer": "un oeuf",
-    "acceptedAnswers": ["oeuf", "des oeufs"]
+    "question": "Quelle est la plus petite planète de notre système solaire ?",
+    "answer": "Mercure"
   },
   {
     "id": "FMZNMR",
-    "question": "Plus j'en enlève, plus je deviens grand. Qui suis-je ?",
-    "answer": "un trou",
-    "acceptedAnswers": ["trou", "des trous", "les trous"]
+    "question": "Quelle est la capitale du Bangladesh ?",
+    "answer": "Dacca",
+    "acceptedAnswers": ["dhaka", "daka", "dacca"]
   },
   {
     "id": "MYMVGR",
-    "question": "Quel légume creusé et illuminé est le symbole d'Halloween ?",
-    "answer": "la citrouille",
-    "acceptedAnswers": ["citrouille", "une citrouille", "citrouilles", "potiron"]
+    "question": "En cas d'arrêt cardio-respiratoire chez un patient adulte en service, quel numéro de bip dois-tu composer ?",
+    "answer": "2004",
+    "acceptedAnswers": ["bip 2004"]
+  },
+  {
+    "id": "2ZDCQQ",
+    "question": "Quel acronyme est utilisé pour structurer les transmissions entre soignants, notamment en situation d'urgence ?",
+    "answer": "SAED",
+    "acceptedAnswers": ["saed"]
+  },
+  {
+    "id": "SM88ZF",
+    "question": "Qui est à l'origine de la loi de 1975 sur la dépénalisation de l'IVG ?<br>(prénom et nom)",
+    "answer": "Simone Veil",
+    "acceptedAnswers": ["veil", "veil simone", "simone veil"]
+  },
+  {
+    "id": "TMXC8H",
+    "question": "Pour quelle découverte scientifique Alexander Fleming est-il le plus connu ?",
+    "answer": "La pénicilline",
+    "acceptedAnswers": ["penicilline", "pénicilline", "la penicilline"]
+  },
+  {
+    "id": "S3PBCV",
+    "question": "Quel est le prénom du Dr Delafontaine, à l'origine du nom de notre hôpital ?",
+    "answer": "Pierre"
+  },
+  {
+    "id": "ECFQS7",
+    "question": "Quel film, réalisé par Mélisa Godet et sorti en salle en 2026, dépeint l'une des structures du CHSD ?",
+    "answer": "La Maison des femmes",
+    "acceptedAnswers": ["maison des femmes", "la maison des femmes"]
+  },
+  {
+    "id": "FPG4J7",
+    "question": "De quel corps de métier la check-list préopératoire est-elle inspirée ?",
+    "answer": "L'aviation",
+    "acceptedAnswers": ["aviation", "aeronautique", "aéronautique", "aviation civile"]
+  },
+  {
+    "id": "HDPB7W",
+    "question": "Quel hôpital a accueilli la première école de sages-femmes en 1802 ?",
+    "answer": "Port-Royal",
+    "acceptedAnswers": ["port royal", "portroyal", "hopital port royal", "maternite port royal"]
+  },
+  {
+    "id": "95QTT6",
+    "question": "Cite l'une des deux langues officielles de l'Afghanistan.",
+    "answer": "Le dari ou le pachto",
+    "acceptedAnswers": [
+      "dari",
+      "pachto",
+      "pashto",
+      "pachtou",
+      "persan",
+      "le dari",
+      "le pachto"
+    ]
+  },
+  {
+    "id": "9XTV2D",
+    "question": "Quel est le titre du film dépeignant une partie de la vie du Dr Denis Mukwege ?",
+    "answer": "Muganga",
+    "acceptedAnswers": ["muganga celui qui soigne"]
+  },
+  {
+    "id": "BVZ4P4",
+    "question": "En quelle année le Dr Stéphane Bounan a-t-il quitté Port-Royal pour le CHSD ?",
+    "answer": "2011"
+  },
+  {
+    "id": "4NFMAG",
+    "question": "Combien de sages-femmes y a-t-il à l'heure actuelle dans l'équipe de la maternité du CHSD ?",
+    "answer": "76"
+  },
+  {
+    "id": "2TWMHN",
+    "question": "Quel est le nom de famille du médecin référent VIH et grossesse au CHSD depuis 2015 ?",
+    "answer": "Mahdhi",
+    "acceptedAnswers": ["mahdi", "madhi", "mahdhi"]
+  },
+  {
+    "id": "FBE9WR",
+    "question": "Imagine : tu es sorcier au Moyen Âge et tu trouves de la <i>Ruta graveolens</i>. Que pourrait te permettre de faire cette plante ?<br>(indice : la réponse tient en 3 lettres)",
+    "answer": "IVG",
+    "acceptedAnswers": [
+      "ivg",
+      "avortement",
+      "avorter",
+      "interruption volontaire de grossesse",
+      "une ivg"
+    ]
+  },
+  {
+    "id": "TV8N5H",
+    "question": "Ils sont souvent nombreux, dans l'eau, des coups d'épée.<br>Ce n'est pourtant qu'un jeu où un roi est piégé.<br>Qui sont-ils ?",
+    "answer": "Les échecs",
+    "acceptedAnswers": ["echecs", "échecs", "les echecs", "jeu d'echecs", "le jeu d'echecs"]
+  },
+  {
+    "id": "XAV5ES",
+    "question": "Elle peut être de revers, ou même militaire.<br>Un objet circulaire, dont tu peux être fier.<br>Qui est-elle ?",
+    "answer": "La médaille",
+    "acceptedAnswers": ["medaille", "médaille", "la medaille", "une medaille"]
+  },
+  {
+    "id": "39W94R",
+    "question": "Il peut faire partie d'une main, il est toujours numéro un.<br>C'est un surnom pour les doués.<br>Souvent gagnant est son carré.<br>Qui est-il ?",
+    "answer": "L'as",
+    "acceptedAnswers": ["as", "un as", "las"]
+  },
+  {
+    "id": "X2ZBW2",
+    "question": "Il est parfois critique. Il peut être invoqué.<br>Fort utile à l'équipe. Son trait peut amuser.<br>Qui est-il ?",
+    "answer": "L'esprit",
+    "acceptedAnswers": ["esprit", "lesprit", "un esprit"]
   }
 ]
