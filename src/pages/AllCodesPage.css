@@ -39,13 +39,51 @@
 }
 
 /* Sans cette étiquette, un fantôme défaillant est indiagnosticable (specs/15). */
-.qr figcaption {
+.qr figcaption,
+.ghost-card figcaption {
   margin-top: 6px;
   font-family: ui-monospace, 'SF Mono', Menlo, monospace;
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.08em;
   color: #000;
+}
+
+/* Colonnes plus larges : les illustrations sont portrait, plus hautes que les
+   simples QR, et le QR n'y occupe qu'une fraction de l'image (specs/15). */
+.all-codes-grid-art {
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+}
+
+.ghost-card {
+  margin: 0;
+  padding: 8px 8px 4px;
+  background: #fff;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.ghost-card-art {
+  position: relative;
+}
+
+.ghost-card-art img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Le viewBox carré du QR (voir AllCodesPage.tsx) s'étire ici sans perte : la
+   boîte mesurée est carrée en pixels même si son % diffère en largeur et en
+   hauteur, l'image source n'étant pas carrée elle-même. */
+.ghost-card-qr {
+  position: absolute;
+}
+
+.ghost-card-qr svg {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 /* Fond blanc, QR noirs : le thème sombre viderait une cartouche pour rien. */
@@ -77,10 +115,15 @@
   }
 
   /* Jamais un QR code coupé en deux entre deux feuilles. */
-  .qr {
+  .qr,
+  .ghost-card {
     break-inside: avoid;
     page-break-inside: avoid;
     border: 1px dashed #bbb;
+  }
+
+  .all-codes-grid-art {
+    grid-template-columns: repeat(3, 1fr);
   }
 
   @page {

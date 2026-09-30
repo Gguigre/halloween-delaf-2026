@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { QRCodeSVG } from 'qrcode.react'
 import { basicGhosts, jokerGhosts, quizGhosts } from '../game/content'
+import { BASIC_QR_BOX, basicArtFor } from '../game/ghostArt'
 import './AllCodesPage.css'
 
 type Filter = 'all' | 'basic' | 'quiz' | 'joker'
@@ -23,6 +24,46 @@ const SECTIONS = [
     ids: jokerGhosts.map((g) => g.id),
   },
 ]
+
+/** Simple étiquette : QR nu et identifiant, tant qu'aucun visuel n'est fourni. */
+function QrOnly({ id, url }: { id: string; url: string }) {
+  return (
+    <figure className="qr">
+      <QRCodeSVG value={url} size={128} level="M" />
+      <figcaption>{id}</figcaption>
+    </figure>
+  )
+}
+
+/**
+ * Le QR est posé en direct sur l'illustration, à l'emplacement du repère mesuré
+ * sur les visuels fournis (`BASIC_QR_BOX`) : jamais une image de QR figée, pour
+ * qu'une correction de `base` (specs/01) reste sans effet sur le matériel déjà
+ * dessiné.
+ */
+function GhostCard({ id, url, art }: { id: string; url: string; art: string }) {
+  return (
+    <figure className="ghost-card">
+      <div className="ghost-card-art">
+        <img src={art} alt="" />
+        <div
+          className="ghost-card-qr"
+          style={{
+            left: `${BASIC_QR_BOX.x}%`,
+            top: `${BASIC_QR_BOX.y}%`,
+            width: `${BASIC_QR_BOX.w}%`,
+            height: `${BASIC_QR_BOX.h}%`,
+          }}
+        >
+          {/* `size` fixe un viewBox carré ; le CSS l'étire ensuite à la taille du
+              repère mesuré sur le visuel — le contenu du QR reste net, vectoriel. */}
+          <QRCodeSVG value={url} level="M" size={256} />
+        </div>
+      </div>
+      <figcaption>{id}</figcaption>
+    </figure>
+  )
+}
 
 export function AllCodesPage() {
   const [filter, setFilter] = useState<Filter>('all')
@@ -65,13 +106,21 @@ export function AllCodesPage() {
       {shown.map((section) => (
         <section key={section.key} className="all-codes-section">
           <h2>{section.title}</h2>
-          <div className="all-codes-grid">
-            {section.ids.map((id) => (
-              <figure key={id} className="qr">
-                <QRCodeSVG value={ghostUrl(section.route, id)} size={128} level="M" />
-                <figcaption>{id}</figcaption>
-              </figure>
-            ))}
+          <div
+            className={`all-codes-grid ${section.key === 'basic' ? 'all-codes-grid-art' : ''}`}
+          >
+            {section.ids.map((id, index) =>
+              section.key === 'basic' ? (
+                <GhostCard
+                  key={id}
+                  id={id}
+                  url={ghostUrl(section.route, id)}
+                  art={basicArtFor(index)}
+                />
+              ) : (
+                <QrOnly key={id} id={id} url={ghostUrl(section.route, id)} />
+              ),
+            )}
           </div>
         </section>
       ))}

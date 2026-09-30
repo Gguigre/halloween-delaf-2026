@@ -191,8 +191,17 @@ contenu, groupés par type, avec l'identifiant en clair sous chacun — sans cet
 étiquette, un fantôme signalé comme défaillant est indiagnosticable. Un filtre
 permet d'imprimer les catégories séparément.
 
-L'aperçu d'impression est en noir sur blanc, 4 par ligne, avec des traits de
-découpe et sans QR coupé entre deux pages.
+L'aperçu d'impression est en noir sur blanc, avec des traits de découpe et sans
+QR coupé entre deux pages.
+
+Les fantômes basiques ont une illustration en fond ([`src/assets/ghosts/`](src/assets/ghosts/)),
+avec le QR posé en direct dessus — jamais une image figée, pour qu'une correction
+de `base` (specs/01) reste sans effet sur le matériel déjà dessiné. La position du
+QR ([`BASIC_QR_BOX`](src/game/ghostArt.ts)) a été mesurée par script sur les
+visuels fournis, à l'endroit d'un repère magenta dans le dessin d'origine ; ajouter
+un nouveau visuel demande de remesurer ce repère avant de l'utiliser, ou de
+recaler le nouveau dessin sur les mêmes proportions que les précédents. Les
+fantômes quiz et joker n'ont pas encore de visuel : ils s'impriment en QR nu.
 
 ⚠️ **Procédure obligatoire avant tout tirage en série** : les URLs encodées
 dépendent de l'adresse d'où la page est ouverte. Ouverte en local, elle produit des
