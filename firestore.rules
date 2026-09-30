@@ -28,10 +28,19 @@ service cloud.firestore {
                     && request.resource.data.jokers.size() == 0;
 
       // Mise à jour : ni le prénom, ni le code, ni la date de création ne bougent.
+      //
+      // Et la progression ne peut que croître. Le jeu n'a pas d'authentification, et
+      // le classement expose l'identifiant de chaque document : n'importe qui peut
+      // donc écrire dans la partie d'un autre. Gonfler un score se voit et se
+      // rattrape en discutant ; effacer des scans, non — un fantôme trouvé il y a
+      // trois semaines ne se retrouve pas. C'est ce seul cas qu'on ferme ici.
       allow update: if isValidPlayer(request.resource.data)
                     && request.resource.data.name == resource.data.name
                     && request.resource.data.pin == resource.data.pin
-                    && request.resource.data.createdAt == resource.data.createdAt;
+                    && request.resource.data.createdAt == resource.data.createdAt
+                    && request.resource.data.ghosts.size() >= resource.data.ghosts.size()
+                    && request.resource.data.quizzes.size() >= resource.data.quizzes.size()
+                    && request.resource.data.jokers.size() >= resource.data.jokers.size();
 
       // Aucune suppression, jamais.
       allow delete: if false;

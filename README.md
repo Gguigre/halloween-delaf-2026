@@ -116,6 +116,17 @@ Déploiement, au choix :
 Vérifier avant le lancement qu'aucune règle `request.time < timestamp.date(...)` ne
 traîne dans la console (voir [`specs/17`](specs/17-operations-runbook.md)).
 
+### Progression append-only
+
+Sans authentification, et le classement exposant l'identifiant de chaque document,
+n'importe qui peut écrire dans la partie de n'importe qui d'autre — c'est un risque
+pesé et accepté par [`specs/00`](specs/00-overview.md). Les règles interdisent
+cependant qu'une mise à jour fasse **rétrécir** `ghosts`, `quizzes` ou `jokers` :
+gonfler le score de quelqu'un se voit et se corrige en le signalant, effacer des
+scans ne se rattrape pas — un fantôme trouvé trois semaines plus tôt ne se
+retrouve pas. Ça ne gêne aucune écriture du jeu : `arrayUnion` ne fait qu'ajouter,
+et la victoire d'un joker remplace une entrée sans changer la taille du tableau.
+
 ## L'alerte « secret détecté » de GitHub
 
 GitHub signale la clé Firebase de [`src/firebase/config.ts`](src/firebase/config.ts)
