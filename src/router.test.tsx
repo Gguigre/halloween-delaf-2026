@@ -12,6 +12,7 @@ describe('routes', () => {
       '/leaderboard',
       '/allCodes',
       '/admin',
+      '/stats',
       '*',
     ])
   })

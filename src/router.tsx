@@ -10,6 +10,7 @@ import { JokerGhostPage } from './pages/JokerGhostPage'
 import { LeaderboardPage } from './pages/LeaderboardPage'
 import { AllCodesPage } from './pages/AllCodesPage'
 import { AdminPage } from './pages/AdminPage'
+import { StatsPage } from './pages/StatsPage'
 import { NotFoundPage } from './pages/NotFoundPage'
 
 /** Tous les écrans passent par `Layout` : aucun n'est un cul-de-sac (specs/02). */
@@ -27,6 +28,7 @@ export const routes = [
   { path: '/leaderboard', element: screen(<LeaderboardPage />) },
   { path: '/allCodes', element: screen(<AllCodesPage />) },
   { path: '/admin', element: screen(<AdminPage />) },
+  { path: '/stats', element: screen(<StatsPage />) },
   { path: '*', element: screen(<NotFoundPage />) },
 ]
 

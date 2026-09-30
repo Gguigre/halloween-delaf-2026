@@ -1,0 +1,75 @@
+.stats-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 8px;
+  font-size: 15px;
+}
+
+.stats-table th,
+.stats-table td {
+  padding: 8px 4px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.stats-table th {
+  color: var(--text-dim);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.stats-table td:not(:first-child),
+.stats-table th:not(:first-child) {
+  text-align: right;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.stats-id {
+  display: block;
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 11px;
+  color: var(--text-dim);
+  letter-spacing: 0.06em;
+}
+
+.stats-ids {
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 13px;
+  color: var(--text-dim);
+  word-break: break-word;
+  margin: 4px 0 14px;
+}
+
+.stats-activity {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.stats-day {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+.stats-day-label {
+  width: 46px;
+  color: var(--text-dim);
+  flex-shrink: 0;
+}
+
+.stats-bar {
+  height: 14px;
+  min-width: 2px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--violet), var(--orange));
+}
+
+.stats-day-count {
+  color: var(--text-dim);
+}

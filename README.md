@@ -197,6 +197,24 @@ redonner son code à quelqu'un qui l'a perdu, ce qui est la demande la plus fré
 sur un mois de jeu. Le nettoyage de la base avant le lancement se fait depuis la
 console Firebase, jamais depuis cette page.
 
+## Suivre le jeu pendant le mois
+
+`/stats`, comme `/admin` : en lecture seule, liée depuis aucun écran joueur. Elle
+recalcule tout depuis les documents joueurs — taux de réussite par mini-jeu et par
+énigme, fantômes que personne n'a jamais scannés, activité par jour.
+
+C'est la source à privilégier sur Google Analytics, qui est aussi branché (cinq
+évènements : création de joueur, fantôme trouvé, quiz répondu, joker lancé et
+terminé). Analytics perd les joueurs équipés d'un bloqueur, a 24 h de latence, et
+ne ventile par fantôme qu'une fois les paramètres déclarés en dimensions
+personnalisées dans GA4. `/stats` n'a aucun de ces défauts : ce sont les données du
+jeu elles-mêmes.
+
+Seule limite : les fantômes blancs sont stockés sans horodatage (`ghosts: string[]`,
+modèle figé par [`specs/03`](specs/03-data-model-and-content.md)), donc ils ne
+figurent pas dans la courbe d'activité. Seul Analytics peut dire quand ils ont été
+scannés.
+
 ## Avant le lancement
 
 Le déroulé complet est dans [`specs/17`](specs/17-operations-runbook.md). Les points
