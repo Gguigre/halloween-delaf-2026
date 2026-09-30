@@ -36,6 +36,18 @@ describe('intégrité du contenu', () => {
     }
   })
 
+  it('donne la même réserve de mots à tous les fantômes wordle', () => {
+    // La garantie de non-répétition vient d'une permutation unique par joueur, dans
+    // laquelle chaque fantôme pioche à son rang. Deux réserves différentes feraient
+    // deux permutations indépendantes, et la garantie tomberait sans rien casser
+    // de visible — jusqu'à ce qu'un joueur rejoue le même mot (specs/12).
+    const reserves = jokerGhosts
+      .filter((ghost) => ghost.game === 'wordle')
+      .map((ghost) => (ghost.game === 'wordle' ? JSON.stringify(ghost.config.words) : ''))
+
+    expect(new Set(reserves).size).toBeLessThanOrEqual(1)
+  })
+
   it('a des réserves de mots assez grandes pour qu’aucun joueur ne rejoue un mot', () => {
     // Chaque fantôme wordle pioche à son rang dans la permutation du joueur : si la
     // réserve compte moins de mots que de fantômes wordle, les rangs rebouclent et

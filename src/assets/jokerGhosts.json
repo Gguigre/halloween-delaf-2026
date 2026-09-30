@@ -1,18 +1,24 @@
 [
   {
-    "id": "5ER5ZP",
-    "game": "snake",
-    "timeLimitSeconds": 90,
-    "config": { "gridSize": 15, "targetApples": 10, "tickMs": 160 }
-  },
-  {
-    "id": "TBPGWP",
-    "game": "tetris",
-    "timeLimitSeconds": 150,
-    "config": { "cols": 8, "rows": 14, "targetLines": 3, "dropMs": 700 }
-  },
-  {
     "id": "PZHATW",
+    "game": "sudoku",
+    "timeLimitSeconds": 180,
+    "config": { "cellsToRemove": 12 }
+  },
+  {
+    "id": "JGB6GH",
+    "game": "sudoku",
+    "timeLimitSeconds": 180,
+    "config": { "cellsToRemove": 12 }
+  },
+  {
+    "id": "W6W5PX",
+    "game": "sudoku",
+    "timeLimitSeconds": 180,
+    "config": { "cellsToRemove": 12 }
+  },
+  {
+    "id": "XCQHDM",
     "game": "sudoku",
     "timeLimitSeconds": 180,
     "config": { "cellsToRemove": 12 }
@@ -22,8 +28,75 @@
     "game": "wordle",
     "timeLimitSeconds": 180,
     "config": {
-      "words": ["MOMIE", "MAGIE", "TOMBE", "OMBRE", "CRANE", "HIBOU", "BALAI", "TOILE"],
+      "words": [
+        "MOMIE",
+        "MAGIE",
+        "TOMBE",
+        "OMBRE",
+        "CRANE",
+        "HIBOU",
+        "BALAI",
+        "TOILE",
+        "BRUME",
+        "ANTRE",
+        "RITES",
+        "PACTE",
+        "VOILE",
+        "GIVRE",
+        "LOUPS",
+        "NUITS"
+      ],
       "maxAttempts": 6
     }
+  },
+  {
+    "id": "P97E8J",
+    "game": "wordle",
+    "timeLimitSeconds": 180,
+    "config": {
+      "words": [
+        "MOMIE",
+        "MAGIE",
+        "TOMBE",
+        "OMBRE",
+        "CRANE",
+        "HIBOU",
+        "BALAI",
+        "TOILE",
+        "BRUME",
+        "ANTRE",
+        "RITES",
+        "PACTE",
+        "VOILE",
+        "GIVRE",
+        "LOUPS",
+        "NUITS"
+      ],
+      "maxAttempts": 6
+    }
+  },
+  {
+    "id": "TBPGWP",
+    "game": "tetris",
+    "timeLimitSeconds": 150,
+    "config": { "cols": 8, "rows": 14, "targetLines": 3, "dropMs": 700 }
+  },
+  {
+    "id": "KGPZMW",
+    "game": "tetris",
+    "timeLimitSeconds": 150,
+    "config": { "cols": 8, "rows": 14, "targetLines": 3, "dropMs": 700 }
+  },
+  {
+    "id": "5ER5ZP",
+    "game": "snake",
+    "timeLimitSeconds": 90,
+    "config": { "gridSize": 15, "targetApples": 10, "tickMs": 160 }
+  },
+  {
+    "id": "K9GZ3J",
+    "game": "snake",
+    "timeLimitSeconds": 90,
+    "config": { "gridSize": 15, "targetApples": 10, "tickMs": 160 }
   }
 ]
