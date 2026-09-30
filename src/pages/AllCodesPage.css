@@ -16,43 +16,12 @@
   margin-top: 24px;
 }
 
+/* Colonnes larges : les illustrations sont portrait, et le QR n'occupe qu'une
+   fraction de l'image (specs/15). */
 .all-codes-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 14px;
-}
-
-.qr {
-  margin: 0;
-  padding: 10px 6px;
-  background: #fff;
-  border-radius: 8px;
-  text-align: center;
-}
-
-.qr svg {
-  display: block;
-  margin: 0 auto;
-  width: 100%;
-  height: auto;
-  max-width: 128px;
-}
-
-/* Sans cette étiquette, un fantôme défaillant est indiagnosticable (specs/15). */
-.qr figcaption,
-.ghost-card figcaption {
-  margin-top: 6px;
-  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: #000;
-}
-
-/* Colonnes plus larges : les illustrations sont portrait, plus hautes que les
-   simples QR, et le QR n'y occupe qu'une fraction de l'image (specs/15). */
-.all-codes-grid-art {
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 14px;
 }
 
 .ghost-card {
@@ -73,17 +42,28 @@
   height: auto;
 }
 
-/* Le viewBox carré du QR (voir AllCodesPage.tsx) s'étire ici sans perte : la
-   boîte mesurée est carrée en pixels même si son % diffère en largeur et en
-   hauteur, l'image source n'étant pas carrée elle-même. */
-.ghost-card-qr {
+/* Fond blanc autour du QR : zone de silence indispensable sur un aplat de
+   couleur pleine (quiz, joker), invisible sur les basiques déjà blancs ici. */
+.ghost-card-pad {
   position: absolute;
+  background: #fff;
+  border-radius: 4px;
 }
 
-.ghost-card-qr svg {
+.ghost-card-qr {
   display: block;
   width: 100%;
   height: 100%;
+}
+
+/* Sans cette étiquette, un fantôme défaillant est indiagnosticable (specs/15). */
+.ghost-card figcaption {
+  margin-top: 6px;
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #000;
 }
 
 /* Fond blanc, QR noirs : le thème sombre viderait une cartouche pour rien. */
@@ -110,20 +90,15 @@
   }
 
   .all-codes-grid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 10mm 6mm;
   }
 
-  /* Jamais un QR code coupé en deux entre deux feuilles. */
-  .qr,
+  /* Jamais un fantôme coupé en deux entre deux feuilles. */
   .ghost-card {
     break-inside: avoid;
     page-break-inside: avoid;
     border: 1px dashed #bbb;
-  }
-
-  .all-codes-grid-art {
-    grid-template-columns: repeat(3, 1fr);
   }
 
   @page {

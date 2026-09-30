@@ -194,14 +194,27 @@ permet d'imprimer les catégories séparément.
 L'aperçu d'impression est en noir sur blanc, avec des traits de découpe et sans
 QR coupé entre deux pages.
 
-Les fantômes basiques ont une illustration en fond ([`src/assets/ghosts/`](src/assets/ghosts/)),
+Les trois types ont une illustration en fond ([`src/assets/ghosts/`](src/assets/ghosts/)),
 avec le QR posé en direct dessus — jamais une image figée, pour qu'une correction
-de `base` (specs/01) reste sans effet sur le matériel déjà dessiné. La position du
-QR ([`BASIC_QR_BOX`](src/game/ghostArt.ts)) a été mesurée par script sur les
-visuels fournis, à l'endroit d'un repère magenta dans le dessin d'origine ; ajouter
-un nouveau visuel demande de remesurer ce repère avant de l'utiliser, ou de
-recaler le nouveau dessin sur les mêmes proportions que les précédents. Les
-fantômes quiz et joker n'ont pas encore de visuel : ils s'impriment en QR nu.
+de `base` (specs/01) reste sans effet sur le matériel déjà dessiné. Une pastille
+blanche est toujours peinte sous le QR (`QUIET_ZONE_RATIO` dans
+[`AllCodesPage.tsx`](src/pages/AllCodesPage.tsx)) : invisible sur les fantômes déjà
+blancs à cet endroit, indispensable sur les aplats de couleur pleine (quiz,
+joker), qui sans elle colleraient le code directement au violet ou à l'orange.
+
+Les fantômes basiques ont 18 visuels décorés (`basic-1` à `basic-18`) plus un
+visuel neutre (`basic-0`). La répartition ([`buildArtPlan`](src/game/ghostArt.ts))
+donne deux occurrences de chaque décor, étalées régulièrement sur les 100
+fantômes plutôt que regroupées en tête de liste, et le reste (64) reçoit le
+visuel neutre. Quiz et joker n'ont chacun qu'un seul visuel partagé.
+
+La position du QR sur chaque visuel est mesurée par script (détection du repère
+magenta par couleur, sur une fenêtre restreinte pour ignorer les décorations
+colorées proches — un cœur ou une queue peuvent se confondre avec le repère si la
+fenêtre de recherche est trop large). Ajouter un nouveau visuel demande de
+remesurer sa position avant de l'utiliser ; les valeurs sont documentées dans
+[`ghostArt.ts`](src/game/ghostArt.ts). `basic-10` (l'éclair) déborde
+volontairement dans le carré du QR : confirmé, ce n'est pas une erreur de mesure.
 
 ⚠️ **Procédure obligatoire avant tout tirage en série** : les URLs encodées
 dépendent de l'adresse d'où la page est ouverte. Ouverte en local, elle produit des
