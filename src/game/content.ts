@@ -18,3 +18,11 @@ export const findQuizGhost = (id: string): QuizGhost | undefined =>
 
 export const findJokerGhost = (id: string): JokerGhost | undefined =>
   jokerGhosts.find((ghost) => ghost.id === id)
+
+/** Rang du fantôme parmi les fantômes wordle : c'est lui qui garantit qu'un joueur
+ *  ne retombe jamais deux fois sur le même mot (specs/12). */
+export const wordleGhostIds: string[] = jokerGhosts
+  .filter((ghost) => ghost.game === 'wordle')
+  .map((ghost) => ghost.id)
+
+export const wordleIndexOf = (id: string): number => wordleGhostIds.indexOf(id)

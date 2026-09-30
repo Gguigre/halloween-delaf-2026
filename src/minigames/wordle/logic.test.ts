@@ -3,26 +3,44 @@ import { bestState, isWinningGuess, pickWord, scoreGuess } from './logic'
 
 const mots = ['MOMIE', 'MAGIE', 'TOMBE', 'OMBRE', 'CRANE', 'HIBOU', 'BALAI', 'TOILE']
 
+const joueurs = [
+  'julie-4271',
+  'jose-1987',
+  'ines-7777',
+  'marek-1234',
+  'zoe-0042',
+  'hugo-2222',
+  'lea-1111',
+  'emma-5555',
+  'theo-8888',
+  'nour-4444',
+]
+
 describe('choix du mot', () => {
   it('est déterministe pour un même joueur et un même fantôme', () => {
-    expect(pickWord(mots, 'julie-4271', 'AB23CD')).toBe(pickWord(mots, 'julie-4271', 'AB23CD'))
+    expect(pickWord(mots, 'julie-4271', 0)).toBe(pickWord(mots, 'julie-4271', 0))
   })
 
   it('donne des mots différents à des joueurs différents', () => {
-    const tires = new Set(
-      ['julie-4271', 'jose-1987', 'ines-7777', 'marek-1234', 'zoe-0042', 'hugo-2222'].map(
-        (joueur) => pickWord(mots, joueur, 'AB23CD'),
-      ),
-    )
+    const tires = new Set(joueurs.map((joueur) => pickWord(mots, joueur, 0)))
     expect(tires.size).toBeGreaterThan(1)
   })
 
   it('reste dans la réserve de mots', () => {
-    expect(mots).toContain(pickWord(mots, 'julie-4271', 'AB23CD'))
+    expect(mots).toContain(pickWord(mots, 'julie-4271', 0))
   })
 
   it('ne casse pas sur une réserve vide', () => {
-    expect(pickWord([], 'julie-4271', 'AB23CD')).toBe('')
+    expect(pickWord([], 'julie-4271', 0)).toBe('')
+  })
+
+  it('ne redonne jamais le même mot à un joueur sur deux fantômes différents', () => {
+    // Le piège du tirage précédent : le taux de répétition dépendait de la paire
+    // d'identifiants, pas du joueur, et pouvait toucher 80 % du service d'un coup.
+    for (const joueur of joueurs) {
+      const recus = mots.map((_, rang) => pickWord(mots, joueur, rang))
+      expect(new Set(recus).size, `répétition pour ${joueur}`).toBe(mots.length)
+    }
   })
 })
 

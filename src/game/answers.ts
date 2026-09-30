@@ -20,8 +20,10 @@ export const isAnswerCorrect = (input: string, ghost: QuizGhost): boolean => {
   if (whole.length === 0) return false
   if (expected.has(whole)) return true
 
+  // On coupe aussi sur les apostrophes : l'élision colle l'article au mot, et
+  // « l'aviation » normalisé d'un bloc donnerait « laviation ».
   return input
-    .split(/\s+/)
+    .split(/[\s'’]+/)
     .map(sanitize)
     .some((word) => word.length > 0 && expected.has(word))
 }

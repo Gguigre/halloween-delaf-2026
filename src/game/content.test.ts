@@ -36,6 +36,19 @@ describe('intégrité du contenu', () => {
     }
   })
 
+  it('a des réserves de mots assez grandes pour qu’aucun joueur ne rejoue un mot', () => {
+    // Chaque fantôme wordle pioche à son rang dans la permutation du joueur : si la
+    // réserve compte moins de mots que de fantômes wordle, les rangs rebouclent et
+    // un joueur retombe sur un mot déjà joué (specs/12).
+    const wordles = jokerGhosts.filter((ghost) => ghost.game === 'wordle')
+    for (const ghost of wordles) {
+      if (ghost.game !== 'wordle') continue
+      expect(ghost.config.words.length, `réserve de ${ghost.id}`).toBeGreaterThanOrEqual(
+        wordles.length,
+      )
+    }
+  })
+
   it('ne référence que des mini-jeux connus, avec une configuration valide', () => {
     const knownGames: JokerGame[] = ['snake', 'tetris', 'sudoku', 'wordle']
 
@@ -48,6 +61,10 @@ describe('intégrité du contenu', () => {
         for (const word of ghost.config.words) {
           expect(word, `mot « ${word} » de ${ghost.id}`).toHaveLength(5)
         }
+        expect(
+          new Set(ghost.config.words.map((word) => word.toUpperCase())).size,
+          `doublon dans la réserve de ${ghost.id}`,
+        ).toBe(ghost.config.words.length)
       }
     }
   })

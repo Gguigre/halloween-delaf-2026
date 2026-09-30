@@ -4,6 +4,7 @@ import { SnakeGame } from './snake/SnakeGame'
 import { SudokuGame } from './sudoku/SudokuGame'
 import { TetrisGame } from './tetris/TetrisGame'
 import { WordleGame } from './wordle/WordleGame'
+import { wordleIndexOf } from '../game/content'
 import { pickWord } from './wordle/logic'
 import type { MinigameResult } from './types'
 
@@ -49,7 +50,7 @@ export function Minigame({ ghost, docId, onFinish }: Props) {
       return (
         <WordleGame
           config={{
-            word: pickWord(ghost.config.words, docId, ghost.id),
+            word: pickWord(ghost.config.words, docId, wordleIndexOf(ghost.id)),
             maxAttempts: ghost.config.maxAttempts,
           }}
           timeLimitSeconds={ghost.timeLimitSeconds}

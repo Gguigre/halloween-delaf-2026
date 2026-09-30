@@ -32,6 +32,21 @@ describe('isAnswerCorrect', () => {
     expect(isAnswerCorrect("c'est une boussole", boussole)).toBe(true)
   })
 
+  it('accepte l’article élidé, collé au mot par une apostrophe', () => {
+    const aviation: QuizGhost = {
+      id: 'MN89PQ',
+      question: 'Quel domaine ?',
+      answer: 'aviation',
+      acceptedAnswers: ['aeronautique'],
+    }
+    expect(isAnswerCorrect("l'aviation", aviation)).toBe(true)
+    expect(isAnswerCorrect("L'Aviation", aviation)).toBe(true)
+    expect(isAnswerCorrect("c'est l'aviation", aviation)).toBe(true)
+    expect(isAnswerCorrect("d'aéronautique", aviation)).toBe(true)
+    // Apostrophe typographique, celle que produit un clavier de téléphone.
+    expect(isAnswerCorrect('l’aviation', aviation)).toBe(true)
+  })
+
   it('accepte les variantes déclarées', () => {
     expect(isAnswerCorrect('citrouille', citrouille)).toBe(true)
     expect(isAnswerCorrect('des citrouilles', citrouille)).toBe(true)

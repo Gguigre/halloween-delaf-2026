@@ -7,19 +7,43 @@ export const WORDLE_DEFAULTS = { maxAttempts: 6 }
 
 export const normalizeWord = (word: string): string => sanitize(word)
 
-/**
- * Hachage simple du couple joueur + fantôme : deux joueurs tombent rarement sur le
- * même mot, ce qui limite le bouche-à-oreille, et un même joueur retrouve toujours
- * le sien sans qu'on ait à le stocker (specs/12).
- */
-export const pickWord = (words: string[], playerKey: string, ghostId: string): string => {
-  if (words.length === 0) return ''
-  const seed = `${playerKey}|${ghostId}`
-  let hash = 0
+/** xorshift32 amorcé par FNV-1a : mélange correct, contrairement à un simple *31. */
+const seededRandom = (seed: string): (() => number) => {
+  let state = 2166136261
   for (let index = 0; index < seed.length; index += 1) {
-    hash = (hash * 31 + seed.charCodeAt(index)) % 2147483647
+    state ^= seed.charCodeAt(index)
+    state = Math.imul(state, 16777619)
   }
-  return words[hash % words.length]
+  return () => {
+    state ^= state << 13
+    state ^= state >>> 17
+    state ^= state << 5
+    return (state >>> 0) / 4294967296
+  }
+}
+
+/**
+ * Le joueur reçoit une permutation de la réserve qui lui est propre, et chaque
+ * fantôme wordle pioche à son rang dedans (specs/12).
+ *
+ * Tirer indépendamment sur le couple joueur + fantôme paraissait suffisant, mais
+ * le résultat dépendait alors surtout de la paire d'identifiants : selon les ids
+ * tirés, jusqu'à 80 % des joueurs retombaient sur le même mot à leur second
+ * fantôme wordle. Ici, deux rangs distincts donnent deux mots distincts par
+ * construction, quels que soient les identifiants — à condition que la réserve
+ * compte au moins autant de mots que de fantômes wordle, ce qu'un test vérifie.
+ */
+export const pickWord = (words: string[], playerKey: string, ghostIndex: number): string => {
+  if (words.length === 0) return ''
+
+  const random = seededRandom(playerKey)
+  const shuffled = [...words]
+  for (let i = shuffled.length - 1; i > 0; i -= 1) {
+    const j = Math.min(i, Math.floor(random() * (i + 1)))
+    ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+  }
+
+  return shuffled[((ghostIndex % words.length) + words.length) % words.length]
 }
 
 /**

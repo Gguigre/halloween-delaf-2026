@@ -6,7 +6,7 @@ import { ResultBanner } from '../components/ResultBanner'
 import { UnknownGhost } from '../components/UnknownGhost'
 import { logGameEvent } from '../firebase/firebase'
 import { markJokerWon, startJokerAttempt } from '../firebase/players'
-import { findJokerGhost } from '../game/content'
+import { findJokerGhost, wordleIndexOf } from '../game/content'
 import { POINTS_JOKER_LOSE, POINTS_JOKER_WIN } from '../game/scoring'
 import { Minigame } from '../minigames/Minigame'
 import { GAME_LABELS, goalOf } from '../minigames/catalogue'
@@ -31,7 +31,9 @@ export function JokerGhostPage() {
   if (!ghost) return <UnknownGhost />
   // Le mot du Wordle est révélé en cas de défaite, ici et pas dans le composant (specs/12).
   const secretWord =
-    ghost.game === 'wordle' ? pickWord(ghost.config.words, docId, ghost.id) : undefined
+    ghost.game === 'wordle'
+      ? pickWord(ghost.config.words, docId, wordleIndexOf(ghost.id))
+      : undefined
 
   if (previous) return <JokerResult won={previous.won} word={secretWord} replay />
 
